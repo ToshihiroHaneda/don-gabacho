@@ -1,4 +1,4 @@
-<project name="report" default="gen-controller" basedir=".">
+<project name="don-gabacho" default="gen-controller" basedir=".">
     <property file="build.properties" />
 
     <path id="classpath">

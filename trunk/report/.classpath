@@ -32,11 +32,10 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/juh-3.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jurt-3.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.14.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/poi-3.6-20091214.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/poi-ooxml-3.6-20091214.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/poi-ooxml-schemas-3.6-20091214.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/ridl-3.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/unoil-3.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/excella-core-don.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/excella-reports-don.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
