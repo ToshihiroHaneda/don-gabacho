@@ -19,7 +19,12 @@
 　process()の戻り値をByteArrayOutputStreamに変更
 　※出力に使うファイル名的な処理はすべて排除
 
+・ExcelOutputStreamExporter
 
+　現在このコンストラクタでOutputStreamを作成しているが
+　もっと自然にOutputStreamを設定すべき。
+
+　※引数渡し等にするかな？
 
 ・現在の問題点としては
 　2007を利用しようとする時に何かしらXMLファイルを
