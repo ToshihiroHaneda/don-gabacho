@@ -2,9 +2,23 @@
 
 = ExCellaの変更点 =
 
+・ソースをUTF-8化
 ・一旦PDFの対応は止める。
-
 ・ファイル出力するようなExpoterは必要ないので削除
+
+・ReportBook
+
+　ファイル名を使う事はないのでInputStreamに変更して
+　
+
+・ReportCreateHelper
+
+　デフォルトのExporterを削除
+
+・ReportProcessor
+　process()の戻り値をByteArrayOutputStreamに変更
+　※出力に使うファイル名的な処理はすべて排除
+
 
 
 ・現在の問題点としては
