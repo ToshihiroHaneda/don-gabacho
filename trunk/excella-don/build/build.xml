@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="Windows-31J"?>
+
+<project name="ExCella" default="release" basedir=".">
+
+	<taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask"/>
+
+	<property file="build.properties" />
+	<property name="workdir" value="work" />
+	<property name="checkoutdir" value="${workdir}/svn" />
+	<property name="src" value="${checkoutdir}/src" />
+	<property name="tests" value="${checkoutdir}/tests" />
+	<property name="tests_report" value="${workdir}/report" />
+	<property name="samples" value="${checkoutdir}/samples" />
+	<property name="class" value="${workdir}/classes" />
+	<property name="lib" value="${checkoutdir}/lib" />
+    <property name="javadocdir" value="${workdir}/apidocs" />
+
+	<!-- タイムスタンプ -->
+	<tstamp>
+		<format property="build_time" pattern="yyyy/MM/dd/ HH:mm" />
+	</tstamp>
+
+	<!-- クラスパス -->
+	<path id="build.classpath">
+		<fileset dir="${lib}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="project.classpath">
+		<pathelement location="${svnjavahl.jar}" />
+		<pathelement location="${svnant.jar}" />
+		<pathelement location="${svnClientAdapter.jar}" />
+	</path>
+
+	<!-- 作業ディレクトリの初期化 -->
+	<target name="init">
+		<delete dir="${workdir}" />
+		<mkdir dir="${workdir}" />
+	</target>
+	
+	<!-- SVNからチェックアウト -->
+	<target name="checkout" depends="init">
+		<svn>
+            <checkout url="${svn.url}" destPath="${checkoutdir}" />
+		</svn>
+	</target>
+		
+    <!-- テスト実行 -->
+    <target name="run_test" depends="checkout">
+        <delete dir="${class}" />
+        <mkdir dir="${class}" />
+    	
+    	<!-- テスト用コンパイル -->
+        <!-- srcのコンパイル -->
+        <javac srcdir="${src}" destdir="${class}" debug="on" optimize="on" deprecation="off">
+            <classpath>
+                <path refid="build.classpath" />
+            </classpath>
+        </javac>
+        <!-- testsのコンパイル -->
+        <javac srcdir="${tests}" destdir="${class}" debug="on" optimize="on" deprecation="off">
+            <classpath>
+                <path refid="build.classpath" />
+            </classpath>
+        </javac>
+        <!-- samplesのコンパイル -->
+        <javac srcdir="${samples}" destdir="${class}" debug="on" optimize="on" deprecation="off">
+            <classpath>
+                <path refid="build.classpath" />
+            </classpath>
+        </javac>
+    	
+        <!-- 結果出力フォルダの削除＆作成 -->
+        <delete dir="${tests_report}" />
+        <mkdir dir="${tests_report}" />
+        
+        <junit printsummary="on" haltonerror="off" haltonfailure="off">
+	        <classpath>
+                <path refid="build.classpath" />
+                <pathelement location="${class}" />
+                <pathelement location="${tests}" />
+	        </classpath>
+	        <formatter type="xml" />
+	        <batchtest fork="true" todir="${tests_report}">
+	            <fileset dir="${tests}">
+	                <include name="**/AllTestSuite.java" />
+	            </fileset>
+	        </batchtest>
+	    </junit>
+	    
+        <junitreport todir="${tests_report}" >
+            <fileset dir="${tests_report}">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report format="frames" todir="${tests_report}" styledir="." />
+        </junitreport>
+	</target>
+
+
+    <!-- Javadocの生成 -->
+    <target name="javadoc" depends="run_test">
+        <delete dir="${javadocdir}" excludes="**/.svn" />
+        <javadoc destdir="${javadocdir}"
+                 windowtitle="ExCella Reports">
+        	<classpath>
+            	<path refid="build.classpath" />
+            </classpath>
+            <sourcepath path="${src}" />
+            <package name="org.bbreak.excella.reports.*" />
+        	<link href="http://java.sun.com/j2se/1.5.0/ja/docs/ja/api/"/>
+        	<link href="http://excella-core.sourceforge.jp/excella-core/javadoc/"/>
+        	<link href="http://poi.apache.org/apidocs/"/>
+        	<link href="http://www.jajakarta.org/commons/logging-1.0.3/ja/withoutPrimary/" />
+        </javadoc>
+    </target>
+    
+
+    <!-- リリース用コンパイル,jarの生成 -->
+	<target name="compile" depends="javadoc">
+		<delete dir="${class}" />
+		<mkdir dir="${class}" />
+		<javac srcdir="${src}" destdir="${class}" debug="on" optimize="on" deprecation="off">
+			<classpath>
+				<path refid="build.classpath" />
+			</classpath>
+		</javac>
+		<jar destfile="${checkoutdir}/${appname}-${version}.jar" basedir="${class}" includes="**">
+			<manifest>
+				<attribute name="Specification-Version" value="${version}" />
+				<attribute name="Implementation-Title" value="${appname}" />
+				<attribute name="Implementation-Version" value="${build_time}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	
+	<!-- リリース単位に固める -->
+	<target name="release" depends="compile">
+		<zip destfile="${workdir}/${appname}-bin.zip">
+            <fileset dir="${checkoutdir}" includes="${appname}-${version}.jar, Readme.txt, COPYING, COPYING.LESSER, LICENSE, NOTICE, lib/**, apidoc/**, samples/**" excludes="**/.svn" />
+            <fileset dir="${workdir}" includes="apidocs/**" excludes="**/.svn" />
+		</zip>
+		<zip destfile="${workdir}/${appname}-all.zip">
+			<fileset dir="${checkoutdir}" includes="**" excludes="**/.svn, apidocs/**" />
+            <fileset dir="${workdir}" includes="apidocs/**" excludes="**/.svn" />
+		</zip>
+	</target>
+</project>
+
