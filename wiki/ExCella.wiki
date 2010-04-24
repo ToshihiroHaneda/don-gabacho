@@ -44,3 +44,8 @@ ReportBookExporterの出力ファイルパスをOutputStreamに変更
 ReportProcessor::process()の引数を１つに変更()
 ※多分要らない。けどn対1をシートで行えば１つのストリームにできるか。。。
 
+
+OoPdfExporterを削除。jodconverter依存の為
+※ライブラリも削除
+ReportCreateHelperのデフォルトからOoPdfExporterを削除
+
