@@ -30,3 +30,17 @@
 　2007を利用しようとする時に何かしらXMLファイルを
 　読み込みにいってるか何かしているので
 　その辺りを変更する必要あり
+
+
+
+※2010/04/24 再度リファクタを行う事を決定
+
+PoiUtil::writeBook()の引数をOutputStreamに変更
+TextFileExporter(book,sheet)、WorkbookExporterを削除
+DebugErrorHandlerのwrite呼び出しをコメント化(需要があれば何らかの形で復活)
+BookController::parseSheet() におけるerrorHandler.notifyExceptio()呼び出しを削除
+
+ReportBookExporterの出力ファイルパスをOutputStreamに変更
+ReportProcessor::process()の引数を１つに変更()
+※多分要らない。けどn対1をシートで行えば１つのストリームにできるか。。。
+
