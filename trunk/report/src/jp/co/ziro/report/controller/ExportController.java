@@ -2,15 +2,13 @@ package jp.co.ziro.report.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.ziro.report.model.Template;
 
-import org.bbreak.excella.reports.exporter.ExcelOutputStreamExporter;
+import org.bbreak.excella.reports.exporter.ExcelExporter;
 import org.bbreak.excella.reports.model.ReportBook;
 import org.bbreak.excella.reports.model.ReportSheet;
 import org.bbreak.excella.reports.processor.ReportProcessor;
@@ -32,7 +30,7 @@ public class ExportController extends Controller {
 
         ByteArrayInputStream inStream = new ByteArrayInputStream(template.getBytes());
         
-        ReportBook outputBook = new ReportBook(inStream,ExcelOutputStreamExporter.FORMAT_TYPE);
+        ReportBook outputBook = new ReportBook(inStream,ExcelExporter.FORMAT_TYPE);
         
         ReportSheet outputSheet = new ReportSheet("テンプレート","請求書");
         
@@ -51,15 +49,19 @@ public class ExportController extends Controller {
 
         List<String> productNameList = new ArrayList<String>();
         productNameList.add( "ついーとカフェ開発費");
+        productNameList.add( "ついーとカフェ開発費");
         outputSheet.addParam(RowRepeatParamParser.DEFAULT_TAG, "商品名", productNameList.toArray());
 
         List<String> priceList = new ArrayList<String>();
+        priceList.add("10000000");
         priceList.add("10000000");
         outputSheet.addParam(RowRepeatParamParser.DEFAULT_TAG, "単価", priceList.toArray());
 
         List<String> unitList = new ArrayList<String>();
         unitList.add( "1");
+        unitList.add( "1");
         outputSheet.addParam(RowRepeatParamParser.DEFAULT_TAG, "数量", unitList.toArray());
+
         /*
         outputSheet.addParam( SingleParamParser.DEFAULT_TAG, "請求日付","2010/4/30");
         outputSheet.addParam( SingleParamParser.DEFAULT_TAG, "請求番号","REQ-201004000001");
@@ -82,24 +84,22 @@ public class ExportController extends Controller {
         unitList.add( "1");
         outputSheet.addParam(RowRepeatParamParser.DEFAULT_TAG, "数量", unitList.toArray());
         */
-        
+
         //-----------------------------------------------------------
 
         outputBook.addReportSheet(outputSheet);
 
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
         ReportProcessor reportProcessor = new ReportProcessor();
-        stream = reportProcessor.process(outputBook);
+        reportProcessor.process(outputBook);
+        
 
         response.setHeader("Content-Disposition","attachment; filename=excel.xls");
         response.setContentType("application/msexcel");
-        response.setContentLength(stream.toByteArray().length);
  
         OutputStream out = new BufferedOutputStream(response.getOutputStream());
-        out.write(stream.toByteArray());
+        out.write(outputBook.getBytes());
         out.close();
         
-        System.out.println(stream.toByteArray().length);
         return null;
     }
 }
