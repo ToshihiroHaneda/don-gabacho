@@ -31,7 +31,6 @@ import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.bbreak.excella.core.exception.ParseException;
 
 /**
  * Objectsパーサ用独自プロパティ解析クラス
@@ -77,9 +76,8 @@ public abstract class ObjectsPropertyParser {
      * @param sheet 対象シート
      * @param tagCell 対象セル
      * @return 処理対象の場合はTrue、処理対象外の場合はFalse
-     * @throws ParseException
      */
-    public boolean isParse( Sheet sheet, Cell tagCell) throws ParseException {
+    public boolean isParse( Sheet sheet, Cell tagCell) {
         if ( tagCell == null) {
             return false;
         }
@@ -100,7 +98,6 @@ public abstract class ObjectsPropertyParser {
      * @param cellValue セルの値
      * @param tag タグ
      * @param params パラメータのマップ
-     * @throws ParseException
      */
-    public abstract void parse( Object object, Object cellValue, String tag, Map<String, String> params) throws ParseException;
+    public abstract void parse( Object object, Object cellValue, String tag, Map<String, String> params);
 }

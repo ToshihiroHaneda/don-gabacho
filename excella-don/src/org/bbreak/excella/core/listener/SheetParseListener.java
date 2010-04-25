@@ -30,7 +30,6 @@ package org.bbreak.excella.core.listener;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.bbreak.excella.core.SheetData;
 import org.bbreak.excella.core.SheetParser;
-import org.bbreak.excella.core.exception.ParseException;
 
 /**
  * シート解析時のイベント通知リスナ
@@ -44,7 +43,7 @@ public interface SheetParseListener {
      * @param sheet 対象シート
      * @param sheetParser 対象パーサ
      */
-    void preParse( Sheet sheet, SheetParser sheetParser) throws ParseException;
+    void preParse( Sheet sheet, SheetParser sheetParser);
 
     /**
      * シート解析後に呼び出されるメソッド
@@ -53,5 +52,5 @@ public interface SheetParseListener {
      * @param sheetParser 対象パーサ
      * @param sheetData 解析結果
      */
-    void postParse( Sheet sheet, SheetParser sheetParser, SheetData sheetData) throws ParseException;
+    void postParse( Sheet sheet, SheetParser sheetParser, SheetData sheetData);
 }

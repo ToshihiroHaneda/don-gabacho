@@ -79,7 +79,7 @@ public class RemoveAdapter extends ReportProcessAdaptor {
      * @see org.bbreak.excella.reports.listener.ReportProcessAdaptor#postParse(org.apache.poi.ss.usermodel.Sheet, org.bbreak.excella.core.SheetParser, org.bbreak.excella.core.SheetData)
      */
     @Override
-    public void postParse( Sheet sheet, SheetParser sheetParser, SheetData sheetData) throws ParseException {
+    public void postParse( Sheet sheet, SheetParser sheetParser, SheetData sheetData) {
 
         int firstRowNum = sheet.getFirstRowNum();
         int lastRowNum = sheet.getLastRowNum();
@@ -141,7 +141,7 @@ public class RemoveAdapter extends ReportProcessAdaptor {
      * @param colIndex
      * @return paramArray
      */
-    private String[] getStrParam( Sheet sheet, int rowIndex, int colIndex) throws ParseException {
+    private String[] getStrParam( Sheet sheet, int rowIndex, int colIndex) {
         Row row = sheet.getRow( rowIndex);
         Cell cell = row.getCell( colIndex);
         String strValue = cell.getStringCellValue();
@@ -302,7 +302,7 @@ public class RemoveAdapter extends ReportProcessAdaptor {
                         }
                     }
                 }
-            } catch ( ParseException e) {
+            } catch (ParseException e) {
                 // 解析できないものは扱わない
                 continue;
             }

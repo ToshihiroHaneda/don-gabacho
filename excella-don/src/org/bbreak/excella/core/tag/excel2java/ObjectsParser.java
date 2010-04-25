@@ -102,10 +102,9 @@ public class ObjectsParser extends TagParser<List<Object>> {
      *              SheetParserのparseSheetメソッドで引数を渡した場合に<BR>
      *              TagParserまで引き継がれる処理データ<BR>
      * @return パース結果
-     * @throws ParseException パース例外
      */
     @Override
-    public List<Object> parse( Sheet sheet, Cell tagCell, Object data) throws ParseException {
+    public List<Object> parse( Sheet sheet, Cell tagCell, Object data) {
 
         List<Object> resultList = new ArrayList<Object>();
         Class<?> clazz = null;

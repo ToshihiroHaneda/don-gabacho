@@ -81,9 +81,8 @@ public abstract class TagParser<RESULT> {
      * @param sheet 対象シート
      * @param tagCell 対象セル
      * @return 処理対象の場合はTrue、処理対象外の場合はFalse
-     * @throws ParseException
      */
-    public boolean isParse( Sheet sheet, Cell tagCell) throws ParseException {
+    public boolean isParse( Sheet sheet, Cell tagCell) {
         // 文字列かつ、タグを含むセルの場合は処理対象
         if ( tagCell.getCellType() == Cell.CELL_TYPE_STRING) {
             String cellTag = TagUtil.getTag( tagCell.getStringCellValue());
@@ -103,9 +102,8 @@ public abstract class TagParser<RESULT> {
      *              SheetParserのparseSheetメソッドで引数を渡した場合に
      *              TagParserまで引き継がれる処理データ
      * @return パース結果
-     * @throws ParseException パース例外
      */
-    public abstract RESULT parse( Sheet sheet, Cell tagCell, Object data) throws ParseException;
+    public abstract RESULT parse( Sheet sheet, Cell tagCell, Object data);
 
     /**
      * 対象タグの取得

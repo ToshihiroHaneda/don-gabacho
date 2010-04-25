@@ -132,7 +132,7 @@ public class ImageParamParser extends ReportsTagParser<String> {
     }
 
     @Override
-    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) throws ParseException {
+    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) {
 
         Map<String, String> paramDef = TagUtil.getParams( tagCell.getStringCellValue());
 
@@ -212,9 +212,8 @@ public class ImageParamParser extends ReportsTagParser<String> {
      * 
      * @param paramDef パラメータ定義
      * @param tagCell タグセル
-     * @throws ParseException 不正なパラメータがある場合
      */
-    private void checkParam( Map<String, String> paramDef, Cell tagCell) throws ParseException {
+    private void checkParam( Map<String, String> paramDef, Cell tagCell) {
         // 画像の幅と高さ調整値が整数以外は不可
         if ( paramDef.containsKey( PARAM_WIDTH)) {
             try {
@@ -277,9 +276,8 @@ public class ImageParamParser extends ReportsTagParser<String> {
      * @param dx1 画像の幅調整値
      * @param dy1 画像の高さ調整値
      * @param scale 画像の倍率値
-     * @throws ParseException
      */
-    public void replaceImageValue( Sheet sheet, Cell cell, String filePath, Integer dx1, Integer dy1, Double scale) throws ParseException {
+    public void replaceImageValue( Sheet sheet, Cell cell, String filePath, Integer dx1, Integer dy1, Double scale) {
 
         Workbook workbook = sheet.getWorkbook();
 

@@ -27,8 +27,6 @@
  ************************************************************************/
 package org.bbreak.excella.reports.processor;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,6 +43,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.bbreak.excella.core.BookController;
 import org.bbreak.excella.core.BookData;
 import org.bbreak.excella.core.SheetData;
+import org.bbreak.excella.core.exception.ExCellaException;
 import org.bbreak.excella.core.exporter.book.BookExporter;
 import org.bbreak.excella.reports.exporter.ReportBookExporter;
 import org.bbreak.excella.reports.listener.RemoveAdapter;
@@ -98,11 +97,8 @@ public class ReportProcessor {
      * 変換処理を実行する。
      *
      * @param reportBooks 帳票情報
-     * @throws IOException ファイルの読み込みに失敗した場合
-     * @throws ParseException 変換処理に失敗した場合
-     * @throws ExportException 出力処理に失敗した場合
      */
-    public void process( ReportBook... reportBooks) throws Exception {
+    public void process( ReportBook... reportBooks) {
         // 出力ブックデータ毎に処理する
         for ( ReportBook reportBook : reportBooks) {
             processBook( reportBook);
@@ -113,11 +109,8 @@ public class ReportProcessor {
      * ワークブックの変換処理を実行する。
      *
      * @param reportBook ワークブックの置換情報
-     * @throws IOException ファイルの読み込みに失敗した場合
-     * @throws ParseException 変換処理に失敗した場合
-     * @throws ExportException 出力処理に失敗した場合
      */
-    private void processBook(ReportBook reportBook) throws Exception {
+    private void processBook(ReportBook reportBook) {
 
         if ( reportBook == null) {
             return;
@@ -218,11 +211,14 @@ public class ReportProcessor {
      *
      * @param filepath テンプレートファイルパス
      * @return テンプレートワークブック
-     * @throws IOException ファイルの読み込みに失敗した場合
      */
-    private Workbook getTemplateWorkbook(InputStream inputStream) throws Exception {
+    private Workbook getTemplateWorkbook(InputStream inputStream) {
         Workbook wb = null;
-        wb = WorkbookFactory.create( inputStream);
+        try {
+            wb = WorkbookFactory.create(inputStream);
+        } catch ( Exception e) {
+            throw new ExCellaException("テンプレート作成時の例外",e);
+        }
         return wb;
     }
 

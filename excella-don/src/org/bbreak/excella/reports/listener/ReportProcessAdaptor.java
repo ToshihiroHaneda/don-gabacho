@@ -31,7 +31,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.bbreak.excella.core.SheetData;
 import org.bbreak.excella.core.SheetParser;
-import org.bbreak.excella.core.exception.ParseException;
 import org.bbreak.excella.reports.model.ReportBook;
 
 /**
@@ -41,10 +40,10 @@ import org.bbreak.excella.reports.model.ReportBook;
  */
 public class ReportProcessAdaptor implements ReportProcessListener {
 
-    public void postParse( Sheet sheet, SheetParser sheetParser, SheetData sheetData) throws ParseException {
+    public void postParse( Sheet sheet, SheetParser sheetParser, SheetData sheetData) {
     }
 
-    public void preParse( Sheet sheet, SheetParser sheetParser) throws ParseException {
+    public void preParse( Sheet sheet, SheetParser sheetParser) {
     }
 
     public void postBookParse( Workbook workbook, ReportBook reportBook) {

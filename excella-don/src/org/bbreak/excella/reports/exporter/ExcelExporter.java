@@ -27,7 +27,6 @@
  ************************************************************************/
 package org.bbreak.excella.reports.exporter;
 
-import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,7 +34,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.bbreak.excella.core.BookData;
-import org.bbreak.excella.core.exception.ExportException;
 import org.bbreak.excella.reports.model.ConvertConfiguration;
 
 /**
@@ -69,16 +67,8 @@ public class ExcelExporter extends ReportBookExporter {
      * @see org.poireports.exporter.ReportBookExporter#output(org.apache.poi.ss.usermodel.Workbook, org.excelparser.BookData, org.poireports.model.ConvertConfiguration)
      */
     @Override
-    public void output( Workbook book, BookData bookdata, ConvertConfiguration configuration) throws ExportException {
+    public void output( Workbook book, BookData bookdata, ConvertConfiguration configuration) {
 
-        try {
-            if ( log.isInfoEnabled()) {
-            }
-            book.write(getOutputStream());
-        } catch ( IOException e) {
-            throw new ExportException( e);
-        }
-        
         if ( book instanceof HSSFWorkbook) {
             if ( log.isInfoEnabled()) {
                 log.info( "XLSExporter呼出");

@@ -27,19 +27,13 @@
  ************************************************************************/
 package org.bbreak.excella.core;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.bbreak.excella.core.exception.ExportException;
 import org.bbreak.excella.core.exception.ParseException;
 import org.bbreak.excella.core.exporter.book.BookExporter;
 import org.bbreak.excella.core.exporter.sheet.SheetExporter;
@@ -91,36 +85,6 @@ public class BookController {
     private BookData bookData = new BookData();
 
     /**
-     * コンストラクタ<BR>
-     * ファイルの形式を判定してWorkbookを生成する
-     * 
-     * @param filepath ファイルパス
-     * @throws IOException ファイルの読み込みに失敗した場合
-     */
-    public BookController( String filepath) throws IOException {
-        if ( log.isInfoEnabled()) {
-            log.info( filepath + "の読み込みを開始します");
-        }
-        if ( filepath.endsWith( XSSF_SUFFIX)) {
-            // XSSF形式
-            workbook = new XSSFWorkbook( filepath);
-        } else {
-            // HSSF形式
-            FileInputStream stream = new FileInputStream( filepath);
-            POIFSFileSystem fs = new POIFSFileSystem( stream);
-            workbook = new HSSFWorkbook( fs);
-            stream.close();
-        }
-
-        // シート名を解析
-        int numOfSheets = workbook.getNumberOfSheets();
-        for ( int sheetCnt = 0; sheetCnt < numOfSheets; sheetCnt++) {
-            String sheetName = workbook.getSheetName( sheetCnt);
-            sheetNames.add( sheetName);
-        }
-    }
-
-    /**
      * コンストラクタ
      * 
      * @param workbook 処理対象のブック
@@ -138,10 +102,8 @@ public class BookController {
     /**
      * ブックに含まれる全シート(コメントシートを除く)の解析の実行
      * 
-     * @throws ParseException パースに失敗した場合
-     * @throws IOException エラーファイルの書き込みに失敗した場合
      */
-    public void parseBook() throws ParseException, ExportException {
+    public void parseBook() {
         parseBook( null);
     }
 
@@ -151,10 +113,8 @@ public class BookController {
      * @param data BookControllerのparseBook(), parseSheet()メソッド、 
      *                SheetParserのparseSheetメソッドで引数を渡した場合に
      *                TagParserまで引き継がれる処理データ
-     * @throws ParseException パースに失敗した場合
-     * @throws ExportException 出力処理に失敗した場合
      */
-    public void parseBook( Object data) throws ParseException, ExportException {
+    public void parseBook( Object data) {
         bookData.clear();
         for ( String sheetName : sheetNames) {
             if ( sheetName.startsWith( COMMENT_PREFIX)) {
@@ -202,10 +162,8 @@ public class BookController {
      * 
      * @param sheetName 解析対象のシート名
      * @return シートの解析結果
-     * @throws ParseException パースに失敗した場合
-     * @throws ExportException エクスポート処理エラー
      */
-    public SheetData parseSheet( String sheetName) throws ParseException, ExportException {
+    public SheetData parseSheet( String sheetName) {
         return parseSheet( sheetName, null);
     }
 
@@ -217,10 +175,8 @@ public class BookController {
      *                SheetParserのparseSheetメソッドで引数を渡した場合に
      *                TagParserまで引き継がれる処理データ
      * @return シートの解析結果
-     * @throws ParseException パース処理エラー
-     * @throws ExportException エクスポート処理エラー
      */
-    public SheetData parseSheet( String sheetName, Object data) throws ParseException, ExportException {
+    public SheetData parseSheet( String sheetName, Object data) {
         Sheet sheet = workbook.getSheet( sheetName);
 
         SheetData sheetData = null;

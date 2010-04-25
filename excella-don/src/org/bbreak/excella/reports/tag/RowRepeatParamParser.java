@@ -122,7 +122,7 @@ public class RowRepeatParamParser extends ReportsTagParser<Object[]> {
     }
 
     @Override
-    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) throws ParseException {
+    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) {
 
         Map<String, String> paramDef = TagUtil.getParams( tagCell.getStringCellValue());
 
@@ -278,9 +278,8 @@ public class RowRepeatParamParser extends ReportsTagParser<Object[]> {
      * 
      * @param paramDef パラメータ定義
      * @param tagCell タグセル
-     * @throws ParseException 不正なパラメータがある場合
      */
-    private void checkParam( Map<String, String> paramDef, Cell tagCell) throws ParseException {
+    private void checkParam( Map<String, String> paramDef, Cell tagCell) {
         // シートハイパーリンク設定有無と重複非表示は重複不可
         if ( paramDef.containsKey( PARAM_DUPLICATE) && paramDef.containsKey( PARAM_SHEET_LINK)) {
             throw new ParseException( tagCell, "二重定義：" + PARAM_DUPLICATE + "," + PARAM_SHEET_LINK);

@@ -35,7 +35,7 @@ import org.apache.poi.ss.usermodel.Cell;
  * @since 1.0
  */
 @SuppressWarnings("serial")
-public class ParseException extends Exception {
+public class ParseException extends RuntimeException {
 	
     /** エラーとなったセル */
     private Cell cell;

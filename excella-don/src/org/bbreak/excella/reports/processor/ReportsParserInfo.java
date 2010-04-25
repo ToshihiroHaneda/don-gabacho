@@ -31,7 +31,6 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.bbreak.excella.core.exception.ParseException;
 import org.bbreak.excella.core.tag.TagParser;
 import org.bbreak.excella.reports.model.ParamInfo;
 import org.bbreak.excella.reports.model.ReportBook;
@@ -113,9 +112,8 @@ public class ReportsParserInfo {
      * @param sheet 対象シート
      * @param tagCell 対象セル
      * @return 解析処理を行うパーサー
-     * @throws ParseException
      */
-    public TagParser<?> getMatchTagParser( Sheet sheet, Cell tagCell) throws ParseException {
+    public TagParser<?> getMatchTagParser( Sheet sheet, Cell tagCell) {
         if ( reportParsers != null) {
             for ( TagParser<?> tagParser : reportParsers) {
                 if ( tagParser.isParse( sheet, tagCell)) {

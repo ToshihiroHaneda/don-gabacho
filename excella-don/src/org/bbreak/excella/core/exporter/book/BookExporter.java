@@ -29,7 +29,6 @@ package org.bbreak.excella.core.exporter.book;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.bbreak.excella.core.BookData;
-import org.bbreak.excella.core.exception.ExportException;
 
 /**
  * ブック解析結果の出力処理用インターフェイス
@@ -54,7 +53,7 @@ public interface BookExporter {
      * @param book 処理後のブック
      * @param bookdata 処理結果のデータ
      */
-    public void export( Workbook book, BookData bookdata) throws ExportException;
+    public void export( Workbook book, BookData bookdata);
 
     /**
      * 終了処理

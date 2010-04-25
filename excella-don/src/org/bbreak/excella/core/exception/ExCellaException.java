@@ -4,8 +4,8 @@
  *
  * ExCella Core - ExcelファイルをJavaから利用するための共通基盤
  *
- * $Id: ConsoleExporter.java 62 2009-05-21 07:35:40Z akira-yokoi $
- * $Revision: 62 $
+ * $Id: ExportException.java 2 2009-05-08 07:39:20Z yuta-takahashi $
+ * $Revision: 2 $
  *
  * This file is part of ExCella Core.
  *
@@ -25,43 +25,22 @@
  * for a copy of the LGPLv3 License.
  *
  ************************************************************************/
-package org.bbreak.excella.core.exporter.book;
-
-import java.util.List;
-
-import org.apache.poi.ss.usermodel.Workbook;
-import org.bbreak.excella.core.BookData;
-import org.bbreak.excella.core.SheetData;
-import org.bbreak.excella.core.exception.ExportException;
+package org.bbreak.excella.core.exception;
 
 /**
- * 解析結果のデータをコンソール(標準出力)に出力するクラス
+ * 出力処理例外
  * 
  * @since 1.0
  */
-public class ConsoleExporter implements BookExporter {
+@SuppressWarnings( "serial")
+public class ExCellaException extends RuntimeException {
 
     /**
-     * 初期化処理
+     * コンストラクタ
+     * 
+     * @param throwable スロー可能オブジェクト
      */
-    public void setup() {
-    }
-
-    /**
-     * 処理実行
-     */
-    public void export( Workbook book, BookData bookdata) throws ExportException {
-        List<String> sheetNames = bookdata.getSheetNames();
-        // シート単位で出力を行う
-        for ( String sheetName : sheetNames) {
-            SheetData sheetData = bookdata.getSheetData( sheetName);
-            System.out.println( sheetData.toString());
-        }
-    }
-
-    /**
-     * 終了処理
-     */
-    public void tearDown() {
+    public ExCellaException(String log,Throwable throwable) {
+        super( throwable);
     }
 }

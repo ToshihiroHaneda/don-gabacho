@@ -32,7 +32,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.bbreak.excella.core.BookData;
-import org.bbreak.excella.core.exception.ExportException;
 import org.bbreak.excella.core.util.PoiUtil;
 import org.bbreak.excella.reports.model.ConvertConfiguration;
 
@@ -64,17 +63,13 @@ public class XLSXExporter extends ReportBookExporter {
      * @see org.poireports.exporter.ReportBookExporter#output(org.apache.poi.ss.usermodel.Workbook, org.excelparser.BookData, org.poireports.model.ConvertConfiguration)
      */
     @Override
-    public void output( Workbook book, BookData bookdata, ConvertConfiguration configuration) throws ExportException {
+    public void output( Workbook book, BookData bookdata, ConvertConfiguration configuration) {
         if ( !(book instanceof XSSFWorkbook)) {
             throw new IllegalArgumentException( "Workbook is not XSSFWorkbook.");
         }
         if ( log.isInfoEnabled()) {
         }
-        try {
-            PoiUtil.writeBook(book,getOutputStream());
-        } catch ( Exception e) {
-            throw new ExportException( e);
-        }
+        PoiUtil.writeBook(book,getOutputStream());
     }
 
     @Override

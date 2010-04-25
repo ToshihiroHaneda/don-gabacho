@@ -34,7 +34,6 @@ import java.util.TreeSet;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.bbreak.excella.core.BookData;
-import org.bbreak.excella.core.exception.ExportException;
 import org.bbreak.excella.core.exporter.book.BookExporter;
 import org.bbreak.excella.core.util.PoiUtil;
 import org.bbreak.excella.reports.model.ConvertConfiguration;
@@ -79,7 +78,7 @@ public abstract class ReportBookExporter implements BookExporter {
      * 
      * @see org.excelparser.exporter.book.BookExporter#export(org.apache.poi.ss.usermodel.Workbook, org.excelparser.BookData)
      */
-    public void export( Workbook book, BookData bookdata) throws ExportException {
+    public void export( Workbook book, BookData bookdata) {
         // テンプレート削除(暫定対応)
         SortedSet<Integer> deleteSheetIndexs = new TreeSet<Integer>( Collections.reverseOrder());
         for ( int i = 0; i < book.getNumberOfSheets(); i++) {
@@ -105,9 +104,8 @@ public abstract class ReportBookExporter implements BookExporter {
      * @param book ワークブック
      * @param bookdata ワークブック解析情報
      * @param configuration 変換設定情報
-     * @throws ExportException 出力に失敗した場合
      */
-    public abstract void output( Workbook book, BookData bookdata, ConvertConfiguration configuration) throws ExportException;
+    public abstract void output( Workbook book, BookData bookdata, ConvertConfiguration configuration);
 
     /**
      * 変換タイプを取得する。

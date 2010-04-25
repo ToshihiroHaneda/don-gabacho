@@ -78,9 +78,8 @@ public class SheetParser {
      *              SheetParserのparseSheetメソッドで引数を渡した場合に
      *              TagParserまで引き継がれる処理データ
      * @return 解析結果
-     * @throws ParseException 解析に失敗した場合にThrowされる
      */
-    public SheetData parseSheet( Sheet sheet, Object data) throws ParseException {
+    public SheetData parseSheet( Sheet sheet, Object data) {
         // 解析結果
         String sheetName = PoiUtil.getSheetName( sheet);
         SheetData sheetData = new SheetData( sheetName);

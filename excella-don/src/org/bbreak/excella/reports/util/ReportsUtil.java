@@ -386,9 +386,8 @@ public final class ReportsUtil {
      * @param cellParam 範囲指定（n:n）
      * @param tagName タグ名称（エラー時出力用）
      * @return intの配列（row、col）
-     * @throws ParseException
      */
-    public static int[] getCellIndex( String cellParam, String tagName) throws ParseException {
+    public static int[] getCellIndex( String cellParam, String tagName) {
         String[] cellIndex = cellParam.split( ":");
         if ( cellIndex.length != 2) {
             throw new ParseException( "cellParam:" + cellParam);
@@ -407,10 +406,9 @@ public final class ReportsUtil {
      * @param index 範囲指定された数字
      * @param tagName タグ名称（エラー出力用）
      * @return 指定された数字をintで返却
-     * @throws ParseException
      * @exception 数値に変換できない場合
      */
-    private static int getIndex( String index, String tagName) throws ParseException {
+    private static int getIndex( String index, String tagName) {
         int intIndex = 0;
         try {
             intIndex = Integer.parseInt( index);

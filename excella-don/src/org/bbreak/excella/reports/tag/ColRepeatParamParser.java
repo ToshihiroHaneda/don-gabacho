@@ -111,7 +111,7 @@ public class ColRepeatParamParser extends ReportsTagParser<Object[]> {
     }
 
     @Override
-    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) throws ParseException {
+    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) {
 
         Map<String, String> paramDef = TagUtil.getParams( tagCell.getStringCellValue());
 
@@ -266,9 +266,8 @@ public class ColRepeatParamParser extends ReportsTagParser<Object[]> {
      * 
      * @param paramDef
      * @param tagCell
-     * @throws ParseException
      */
-    private void checkParam( Map<String, String> paramDef, Cell tagCell) throws ParseException {
+    private void checkParam( Map<String, String> paramDef, Cell tagCell) {
         // キー
         if ( paramDef.containsKey( PARAM_DUPLICATE) && paramDef.containsKey( PARAM_SHEET_LINK)) {
             throw new ParseException( tagCell, "二重定義：" + PARAM_DUPLICATE + "," + PARAM_SHEET_LINK);
