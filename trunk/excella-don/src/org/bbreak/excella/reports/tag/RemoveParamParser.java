@@ -29,7 +29,6 @@ package org.bbreak.excella.reports.tag;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.bbreak.excella.core.exception.ParseException;
 import org.bbreak.excella.reports.model.ParsedReportInfo;
 
 /**
@@ -61,7 +60,7 @@ public class RemoveParamParser extends ReportsTagParser<Object> {
     }
 
     @Override
-    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) throws ParseException {
+    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) {
         // 解析結果の生成
         ParsedReportInfo parsedReportInfo = new ParsedReportInfo();
         parsedReportInfo.setRowIndex( tagCell.getRowIndex());

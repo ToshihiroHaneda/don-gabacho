@@ -54,7 +54,7 @@ public interface SheetExporter {
      * @param sheet 処理後のシート
      * @param sheetdata 処理結果のデータ
      */
-    void export( Sheet sheet, SheetData sheetdata) throws ExportException;
+    void export( Sheet sheet, SheetData sheetdata);
 
     /**
      * 終了処理

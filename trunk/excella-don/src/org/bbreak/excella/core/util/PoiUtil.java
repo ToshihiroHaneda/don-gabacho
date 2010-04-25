@@ -58,6 +58,7 @@ import org.apache.poi.xssf.usermodel.XSSFHyperlink;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xssf.usermodel.helpers.ColumnHelper;
+import org.bbreak.excella.core.exception.ExCellaException;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTCell;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTCol;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTWorksheet;
@@ -346,11 +347,14 @@ public final class PoiUtil {
      * don-gabacho 引数をoutputStreamに変更
      * @param workbook 対象ワークブック
      * @param outputStream 対象OutputStreamStream
-     * @throws IOException ファイル書き込み処理失敗時
      */
-    public static void writeBook(Workbook workbook,OutputStream outputStream) throws IOException {
+    public static void writeBook(Workbook workbook,OutputStream outputStream) {
         // 出力
-        workbook.write(outputStream);
+        try {
+            workbook.write(outputStream);
+        } catch ( IOException e) {
+            throw new ExCellaException("ワークブック出力時の例外",e);
+        }
     }
 
     /**

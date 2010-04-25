@@ -123,7 +123,7 @@ public class BlockRowRepeatParamParser extends ReportsTagParser<Object[]> {
     }
 
     @Override
-    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) throws ParseException {
+    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) {
         try {
             // パラメータの取得
             Map<String, String> paramDef = TagUtil.getParams( tagCell.getStringCellValue());
@@ -499,9 +499,8 @@ public class BlockRowRepeatParamParser extends ReportsTagParser<Object[]> {
      * 
      * @param paramDef
      * @param tagCell
-     * @throws ParseException
      */
-    private void checkParam( Sheet sheet, Map<String, String> paramDef, Cell tagCell) throws ParseException {
+    private void checkParam( Sheet sheet, Map<String, String> paramDef, Cell tagCell) {
 
         // 必須オプションチェック
         // fromCell

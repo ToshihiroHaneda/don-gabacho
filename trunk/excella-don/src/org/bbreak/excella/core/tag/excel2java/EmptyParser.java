@@ -29,7 +29,6 @@ package org.bbreak.excella.core.tag.excel2java;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.bbreak.excella.core.exception.ParseException;
 import org.bbreak.excella.core.tag.TagParser;
 
 /**
@@ -59,10 +58,9 @@ public class EmptyParser extends TagParser<Object> {
      *              SheetParserのparseSheetメソッドで引数を渡した場合に<BR>
      *              TagParserまで引き継がれる処理データ<BR>
      * @return パース結果
-     * @throws ParseException パース例外
      */
     @Override
-    public Object parse( Sheet sheet, Cell tagCell, Object data) throws ParseException {
+    public Object parse( Sheet sheet, Cell tagCell, Object data) {
         return null;
     }
 }

@@ -133,10 +133,9 @@ public class MapParser extends TagParser<Map<?, ?>> {
      *              SheetParserのparseSheetメソッドで引数を渡した場合に<BR>
      *              TagParserまで引き継がれる処理データ<BR>
      * @return パース結果
-     * @throws ParseException パース例外
      */
     @Override
-    public Map<?, ?> parse( Sheet sheet, Cell tagCell, Object data) throws ParseException {
+    public Map<?, ?> parse( Sheet sheet, Cell tagCell, Object data) {
 
         // タグ行
         int tagRowIdx = tagCell.getRowIndex();
@@ -328,9 +327,8 @@ public class MapParser extends TagParser<Map<?, ?>> {
      * 
      * @param paramDef パラメータマップ
      * @param tagCell タグのあるセル
-     * @throws ParseException パース例外
      */
-    private void checkParam( Map<String, String> paramDef, Cell tagCell) throws ParseException {
+    private void checkParam( Map<String, String> paramDef, Cell tagCell) {
         // キー
         if ( paramDef.containsKey( PARAM_KEY) && paramDef.containsKey( PARAM_KEY_COLUMN)) {
             throw new ParseException( tagCell, "二重定義：" + PARAM_KEY + "," + PARAM_KEY_COLUMN);

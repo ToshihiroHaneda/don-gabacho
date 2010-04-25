@@ -171,7 +171,6 @@ public class DebugErrorHandler implements ParseErrorHandler {
 
         try {
             //PoiUtil.writeBook(workbook, resultFileName);
-            System.out.println( "\n" + resultFileName + "にエラーファイルを生成しました");
         } catch ( Exception e) {
             log.warn( "エラーファイルの生成に失敗しました", e);
         }

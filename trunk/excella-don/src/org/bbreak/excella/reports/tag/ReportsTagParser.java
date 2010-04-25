@@ -29,7 +29,6 @@ package org.bbreak.excella.reports.tag;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.bbreak.excella.core.exception.ParseException;
 import org.bbreak.excella.core.tag.TagParser;
 import org.bbreak.excella.reports.model.ParamInfo;
 import org.bbreak.excella.reports.model.ParsedReportInfo;
@@ -47,7 +46,7 @@ public abstract class ReportsTagParser<T> extends TagParser<ParsedReportInfo> {
      * @see org.bbreak.excella.core.tag.TagParser#parse(org.apache.poi.ss.usermodel.Sheet, org.apache.poi.ss.usermodel.Cell, java.lang.Object)
      */
     @Override
-    public abstract ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) throws ParseException;
+    public abstract ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data);
 
     /**
      * コンストラクタ

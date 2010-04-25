@@ -33,14 +33,14 @@ package org.bbreak.excella.core.exception;
  * @since 1.0
  */
 @SuppressWarnings( "serial")
-public class ExportException extends Exception {
+public class ExportException extends RuntimeException {
 
     /**
      * コンストラクタ
      * 
      * @param throwable スロー可能オブジェクト
      */
-    public ExportException( Throwable throwable) {
-        super( throwable);
+    public ExportException(String log,Throwable throwable) {
+        super(log,throwable);
     }
 }

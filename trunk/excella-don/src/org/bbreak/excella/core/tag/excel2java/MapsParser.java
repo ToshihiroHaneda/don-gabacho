@@ -91,10 +91,9 @@ public class MapsParser extends TagParser<List<Map<?, ?>>> {
      * SheetParserのparseSheetメソッドで引数を渡した場合に<BR>
      * TagParserまで引き継がれる処理データ<BR>
      * @return パース結果
-     * @throws ParseException パース例外
      */
     @Override
-    public List<Map<?, ?>> parse( Sheet sheet, Cell tagCell, Object data) throws ParseException {
+    public List<Map<?, ?>> parse( Sheet sheet, Cell tagCell, Object data) {
 
         List<Map<?, ?>> resultList = new ArrayList<Map<?, ?>>();
 

@@ -31,7 +31,6 @@ import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.bbreak.excella.core.exception.ParseException;
 import org.bbreak.excella.core.util.PoiUtil;
 import org.bbreak.excella.core.util.TagUtil;
 import org.bbreak.excella.reports.model.ParamInfo;
@@ -73,7 +72,7 @@ public class SumParamParser extends ReportsTagParser<Object> {
     }
 
     @Override
-    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) throws ParseException {
+    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) {
 
         Map<String, String> paramDef = TagUtil.getParams( tagCell.getStringCellValue());
 

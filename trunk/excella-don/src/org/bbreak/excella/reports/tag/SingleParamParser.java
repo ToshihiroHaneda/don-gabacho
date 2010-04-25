@@ -39,7 +39,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.bbreak.excella.core.exception.ParseException;
 import org.bbreak.excella.core.tag.TagParser;
 import org.bbreak.excella.core.util.PoiUtil;
 import org.bbreak.excella.core.util.TagUtil;
@@ -86,7 +85,7 @@ public class SingleParamParser extends ReportsTagParser<Object> {
     }
 
     @Override
-    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) throws ParseException {
+    public ParsedReportInfo parse( Sheet sheet, Cell tagCell, Object data) {
         List<String> tmpTargets = new ArrayList<String>();
         StringTokenizer tagTokenizer = new StringTokenizer( tagCell.getStringCellValue(), getTag());
         while ( tagTokenizer.hasMoreTokens()) {
@@ -171,9 +170,8 @@ public class SingleParamParser extends ReportsTagParser<Object> {
      * 
      * @param paramDef パラメータ定義
      * @param tagCell タグセル
-     * @throws ParseException 不正なパラメータがある場合
      */
-    private void checkParam( Map<String, String> paramDef, Cell tagCell) throws ParseException {
+    private void checkParam( Map<String, String> paramDef, Cell tagCell) {
     }
 
     /*
@@ -187,7 +185,7 @@ public class SingleParamParser extends ReportsTagParser<Object> {
     }
 
     @Override
-    public boolean isParse( Sheet sheet, Cell tagCell) throws ParseException {
+    public boolean isParse( Sheet sheet, Cell tagCell) {
         // 文字列かつ、タグを含むセルの場合は処理対象
         if ( tagCell.getCellType() == Cell.CELL_TYPE_STRING) {
             String cellTag = TagUtil.getTag( tagCell.getStringCellValue());
