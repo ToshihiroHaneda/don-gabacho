@@ -27,6 +27,8 @@
  ************************************************************************/
 package org.bbreak.excella.reports.exporter;
 
+import java.io.IOException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -69,15 +71,23 @@ public class ExcelExporter extends ReportBookExporter {
     @Override
     public void output( Workbook book, BookData bookdata, ConvertConfiguration configuration) throws ExportException {
 
+        try {
+            if ( log.isInfoEnabled()) {
+            }
+            book.write(getOutputStream());
+        } catch ( IOException e) {
+            throw new ExportException( e);
+        }
+        
         if ( book instanceof HSSFWorkbook) {
             if ( log.isInfoEnabled()) {
                 log.info( "XLSExporter呼出");
             }
             XLSExporter exporter = new XLSExporter();
             exporter.setConfiguration( configuration);
-            exporter.setFilePath( getFilePath() + XLSExporter.EXTENTION);
+            //ストリームを引き渡す。
+            exporter.setOutputStream(getOutputStream());
             exporter.output(book, bookdata, configuration);
-            setFilePath(getFilePath() + XLSExporter.EXTENTION);
 
         } else if ( book instanceof XSSFWorkbook) {
             if ( log.isInfoEnabled()) {
@@ -85,9 +95,8 @@ public class ExcelExporter extends ReportBookExporter {
             }
             XLSXExporter exporter = new XLSXExporter();
             exporter.setConfiguration( configuration);
-            exporter.setFilePath( getFilePath() + XLSXExporter.EXTENTION);
+            exporter.setOutputStream(getOutputStream());
             exporter.output( book, bookdata, configuration);
-            setFilePath(getFilePath() + XLSXExporter.EXTENTION);
         }
     }
 
