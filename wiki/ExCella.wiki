@@ -26,6 +26,14 @@
 
 ・ReportBookをInputStreamとOutputStreamに変更
 
+
+・ExportException、ParseExceptionをRuntimeException派生に変更
+
+・ConsoleExporterを削除
+
+・throws句をすべてにおいて削除
+
+
 以上の変更を行いました。（ヌケはないはず）
 
 ExCellaの仕様をなるべく継承するように変更しました。
@@ -36,6 +44,6 @@ ExCellaの仕様をなるべく継承するように変更しました。
 ・出力パスの指定はできず、ByteArrayOutputStreamに変更したこと
 
 ですかね？
-Excel2007には対応できてないはずですが、
-おそらくそこを触るにはPOIも触る必要があるかと思います。
+Excel2007には対応できてないはずですが、<br>
+おそらくそこを触るにはPOIも触る必要があるかと思います。<br>
 PDFに関してもIFがFileなのでちょっと難しいかな？
