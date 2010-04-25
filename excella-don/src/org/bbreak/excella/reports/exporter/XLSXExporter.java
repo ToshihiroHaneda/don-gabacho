@@ -69,10 +69,9 @@ public class XLSXExporter extends ReportBookExporter {
             throw new IllegalArgumentException( "Workbook is not XSSFWorkbook.");
         }
         if ( log.isInfoEnabled()) {
-            log.info( "処理結果を" + getFilePath() + "に出力します。");
         }
         try {
-            PoiUtil.writeBook( book, getFilePath());
+            PoiUtil.writeBook(book,getOutputStream());
         } catch ( Exception e) {
             throw new ExportException( e);
         }

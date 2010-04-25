@@ -27,6 +27,9 @@
  ************************************************************************/
 package org.bbreak.excella.reports.model;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,12 +48,12 @@ public class ReportBook {
     /**
      * テンプレートファイル名
      */
-    private String templateFileName = null;
+    private InputStream inputStream   = null;
 
     /**
      * 出力パス＋ファイル名（拡張子なし）
      */
-    private String outputFileName = null;
+    private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     /**
      * 出力変換情報
@@ -62,9 +65,8 @@ public class ReportBook {
      * @param outputFileName 出力パス＋ファイル名（拡張子なし）
      * @param configurations 変換情報
      */
-    public ReportBook( String templateFileName, String outputFileName, ConvertConfiguration... configurations) {
-        this.templateFileName = templateFileName;
-        this.outputFileName = outputFileName;
+    public ReportBook(InputStream inStream, ConvertConfiguration... configurations) {
+        this.inputStream = inStream;
         this.configurations = configurations;
     }
 
@@ -73,9 +75,8 @@ public class ReportBook {
      * @param outputFileName 出力パス＋ファイル名（拡張子なし）
      * @param formatTypes 変換タイプ
      */
-    public ReportBook( String templateFileName, String outputFileName, String... formatTypes) {
-        this.templateFileName = templateFileName;
-        this.outputFileName = outputFileName;
+    public ReportBook(InputStream inStream, String... formatTypes) {
+        this.inputStream = inStream;
 
         configurations = new ConvertConfiguration[formatTypes.length];
         for ( int i = 0; i < formatTypes.length; i++) {
@@ -140,17 +141,8 @@ public class ReportBook {
      * 
      * @return 出力パス＋ファイル名（拡張子なし）
      */
-    public String getOutputFileName() {
-        return outputFileName;
-    }
-
-    /**
-     * 出力パス＋ファイル名（拡張子なし）を設定します。
-     * 
-     * @param outputFileName 出力パス＋ファイル名（拡張子なし）
-     */
-    public void setOutputFileName( String outputFileName) {
-        this.outputFileName = outputFileName;
+    public OutputStream getOutputStream() {
+        return outputStream;
     }
 
     /**
@@ -176,17 +168,11 @@ public class ReportBook {
      * 
      * @return テンプレートファイル名
      */
-    public String getTemplateFileName() {
-        return templateFileName;
+    public InputStream getInputStream() {
+        return inputStream;
     }
 
-    /**
-     * テンプレートファイル名を設定します。
-     * 
-     * @param templateFileName テンプレートファイル名
-     */
-    public void setTemplateFileName( String templateFileName) {
-        this.templateFileName = templateFileName;
+    public byte[] getBytes() {
+        return outputStream.toByteArray();
     }
-
 }

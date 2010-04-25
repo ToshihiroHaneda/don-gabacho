@@ -27,7 +27,9 @@
  ************************************************************************/
 package org.bbreak.excella.reports.processor;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -115,13 +117,13 @@ public class ReportProcessor {
      * @throws ParseException 変換処理に失敗した場合
      * @throws ExportException 出力処理に失敗した場合
      */
-    private void processBook( ReportBook reportBook) throws Exception {
+    private void processBook(ReportBook reportBook) throws Exception {
 
         if ( reportBook == null) {
             return;
         }
 
-        Workbook workbook = getTemplateWorkbook( reportBook.getTemplateFileName());
+        Workbook workbook = getTemplateWorkbook(reportBook.getInputStream());
 
         for ( ReportProcessListener listener : listeners) {
             listener.preBookParse( workbook, reportBook);
@@ -153,8 +155,8 @@ public class ReportProcessor {
             for ( ReportBookExporter reportExporter : exporters.values()) {
                 if ( configuration.getFormatType().equals( reportExporter.getFormatType())) {
                     reportExporter.setConfiguration( configuration);
-                    reportExporter.setFilePath(reportBook.getOutputFileName() + reportExporter.getExtention());
-                    controller.addBookExporter( reportExporter);
+                    reportExporter.setOutputStream(reportBook.getOutputStream());
+                    controller.addBookExporter(reportExporter);
                 }
             }
         }
@@ -173,7 +175,6 @@ public class ReportProcessor {
             if ( reportSheet != null) {
 
                 reportsParserInfo.setParamInfo( reportSheet.getParamInfo());
-
                 // 解析の実行
                 SheetData sheetData = controller.parseSheet( sheetName, reportsParserInfo);
                 // 結果の追加
@@ -196,7 +197,7 @@ public class ReportProcessor {
             if ( exporter != null) {
                 exporter.setup();
                 try {
-                    exporter.export( workbook, bookData);
+                    exporter.export(workbook, bookData);
                 } finally {
                     exporter.tearDown();
                 }
@@ -219,20 +220,9 @@ public class ReportProcessor {
      * @return テンプレートワークブック
      * @throws IOException ファイルの読み込みに失敗した場合
      */
-    private Workbook getTemplateWorkbook( String filepath) throws Exception {
-
-        FileInputStream fileIn = null;
+    private Workbook getTemplateWorkbook(InputStream inputStream) throws Exception {
         Workbook wb = null;
-
-        try {
-            fileIn = new FileInputStream( filepath);
-            wb = WorkbookFactory.create( fileIn);
-        } finally {
-            if ( fileIn != null) {
-                fileIn.close();
-            }
-        }
-
+        wb = WorkbookFactory.create( inputStream);
         return wb;
     }
 
