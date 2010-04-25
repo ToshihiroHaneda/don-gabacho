@@ -2,53 +2,29 @@
 
 = ExCellaの変更点 =
 
-・ソースをUTF-8化
-・一旦PDFの対応は止める。
-・ファイル出力するようなExpoterは必要ないので削除
+2010/04/25　現状の状況を残すようにリファクタリング
 
-・ReportBook
+・PoiUtil::writeBook()の引数をOutputStreamに変更
+・TextFileExporter(book,sheet)、WorkbookExporterを削除
+・DebugErrorHandlerのwrite呼び出しをコメント化(需要があれば何らかの形で復活)
+・BookController::parseSheet() におけるerrorHandler.notifyException()呼び出しを削除
+・ReportBookExporterの出力ファイルパスをOutputStreamに変更
+・OoPdfExporterを削除。jodconverter依存(FileのIFだから)の為※ライブラリも削除
+・ReportCreateHelperのデフォルトからOoPdfExporterを削除
+・ReportProcessorへのファイルパス設定時にByteArrayOutputStreamを設定
+・ExcelOutputStreamExporterを削除(ExcelExporterで対応)
+・ReportProssor::getTemplateWorkbook()をInputStreamに変更
+・ReportBookをInputStreamとOutputStreamに変更
 
-　ファイル名を使う事はないのでInputStreamに変更して
-　
+以上の変更を行いました。（ヌケはないはず）
 
-・ReportCreateHelper
+ExCellaの仕様をなるべく継承するように変更しました。
+一番の変更点は
 
-　デフォルトのExporterを削除
+・ファイル系の書き込みを排除したこと
+・出力パスの指定はできず、ByteArrayOutputStreamに変更したこと
 
-・ReportProcessor
-　process()の戻り値をByteArrayOutputStreamに変更
-　※出力に使うファイル名的な処理はすべて排除
-
-・ExcelOutputStreamExporter
-
-　現在このコンストラクタでOutputStreamを作成しているが
-　もっと自然にOutputStreamを設定すべき。
-
-　※引数渡し等にするかな？
-
-・現在の問題点としては
-　2007を利用しようとする時に何かしらXMLファイルを
-　読み込みにいってるか何かしているので
-　その辺りを変更する必要あり
-
-
-
-※2010/04/24 再度リファクタを行う事を決定
-
-PoiUtil::writeBook()の引数をOutputStreamに変更
-TextFileExporter(book,sheet)、WorkbookExporterを削除
-DebugErrorHandlerのwrite呼び出しをコメント化(需要があれば何らかの形で復活)
-BookController::parseSheet() におけるerrorHandler.notifyException()呼び出しを削除
-
-ReportBookExporterの出力ファイルパスをOutputStreamに変更
-
-OoPdfExporterを削除。jodconverter依存(FileのIFだから)の為
-※ライブラリも削除
-ReportCreateHelperのデフォルトからOoPdfExporterを削除
-
-ReportProcessorへのファイルパス設定時にByteArrayOutputStreamを設定
-ExcelOutputStreamExporterを削除(ExcelExporterで対応)
-ReportProssor::getTemplateWorkbook()をInputStreamに変更
-
-ReportBookをInputStreamとOutputStreamに変更
-
+ですかね？
+Excel2007には対応できてないはずですが、
+おそらくそこを触るにはPOIも触る必要があるかと思います。
+PDFに関してもIFがFileなのでちょっと難しいかな？
