@@ -38,14 +38,17 @@
 PoiUtil::writeBook()の引数をOutputStreamに変更
 TextFileExporter(book,sheet)、WorkbookExporterを削除
 DebugErrorHandlerのwrite呼び出しをコメント化(需要があれば何らかの形で復活)
-BookController::parseSheet() におけるerrorHandler.notifyExceptio()呼び出しを削除
+BookController::parseSheet() におけるerrorHandler.notifyException()呼び出しを削除
 
 ReportBookExporterの出力ファイルパスをOutputStreamに変更
-ReportProcessor::process()の引数を１つに変更()
-※多分要らない。けどn対1をシートで行えば１つのストリームにできるか。。。
 
-
-OoPdfExporterを削除。jodconverter依存の為
+OoPdfExporterを削除。jodconverter依存(FileのIFだから)の為
 ※ライブラリも削除
 ReportCreateHelperのデフォルトからOoPdfExporterを削除
+
+ReportProcessorへのファイルパス設定時にByteArrayOutputStreamを設定
+ExcelOutputStreamExporterを削除(ExcelExporterで対応)
+ReportProssor::getTemplateWorkbook()をInputStreamに変更
+
+ReportBookをInputStreamとOutputStreamに変更
 
