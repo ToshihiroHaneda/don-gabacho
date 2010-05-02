@@ -1,15 +1,17 @@
 package jp.co.ziro.report.model;
 
 import java.io.Serializable;
+import jp.co.ziro.report.model.Template;
 
 import com.google.appengine.api.datastore.Key;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.InverseModelListRef;
 import org.slim3.datastore.Model;
+import org.slim3.datastore.ModelRef;
 
 @Model(schemaVersion = 1)
-public class Template implements Serializable {
+public class RepeatParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,23 +20,24 @@ public class Template implements Serializable {
 
     @Attribute(version = true)
     private Long version;
-    
+
     @Attribute
     private String name;
- 
+
     @Attribute
     private String detail;
 
-    @Attribute(lob = true)
-    private byte[] bytes;
 
+    @Attribute
+    private ModelRef<Template> templateRef = 
+                    new ModelRef<Template>(Template.class);
+    
     @Attribute(persistent = false)
-    private InverseModelListRef<Param, Template> paramListRef = 
-        new InverseModelListRef<Param, Template>(Param.class, "templateRef", this);
+    private InverseModelListRef<Param, RepeatParam> paramListRef = 
+        new InverseModelListRef<Param, RepeatParam>(Param.class, "repeatParamRef", this);
 
-    @Attribute(persistent = false)
-    private InverseModelListRef<RepeatParam, Template> repeatParamListRef =
-        new InverseModelListRef<RepeatParam, Template>(RepeatParam.class, "templateRef", this);
+
+
     /**
      * Returns the key.
      *
@@ -92,7 +95,7 @@ public class Template implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Template other = (Template) obj;
+        RepeatParam other = (RepeatParam) obj;
         if (key == null) {
             if (other.key != null) {
                 return false;
@@ -101,14 +104,6 @@ public class Template implements Serializable {
             return false;
         }
         return true;
-    }
-
-    public void setBytes(byte[] bytes) {
-        this.bytes = bytes;
-    }
-
-    public byte[] getBytes() {
-        return bytes;
     }
 
     public void setName(String name) {
@@ -127,12 +122,11 @@ public class Template implements Serializable {
         return detail;
     }
 
-    public InverseModelListRef<Param, Template> getParamListRef() {
+    public ModelRef<Template> getTemplateRef() {
+        return templateRef;
+    }
+
+    public InverseModelListRef<Param, RepeatParam> getParamListRef() {
         return paramListRef;
     }
-
-    public InverseModelListRef<RepeatParam, Template> getRepeatParamListRef() {
-        return repeatParamListRef;
-    }
-
 }
