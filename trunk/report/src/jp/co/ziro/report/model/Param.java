@@ -5,11 +5,11 @@ import java.io.Serializable;
 import com.google.appengine.api.datastore.Key;
 
 import org.slim3.datastore.Attribute;
-import org.slim3.datastore.InverseModelListRef;
 import org.slim3.datastore.Model;
+import org.slim3.datastore.ModelRef;
 
 @Model(schemaVersion = 1)
-public class Template implements Serializable {
+public class Param implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,23 +18,23 @@ public class Template implements Serializable {
 
     @Attribute(version = true)
     private Long version;
-    
+
     @Attribute
     private String name;
- 
+
     @Attribute
-    private String detail;
+    private Integer type;
+    
+    @Attribute
+    private String attr;
 
-    @Attribute(lob = true)
-    private byte[] bytes;
+    @Attribute
+    private ModelRef<Template> templateRef = 
+                    new ModelRef<Template>(Template.class);
 
-    @Attribute(persistent = false)
-    private InverseModelListRef<Param, Template> paramListRef = 
-        new InverseModelListRef<Param, Template>(Param.class, "templateRef", this);
-
-    @Attribute(persistent = false)
-    private InverseModelListRef<RepeatParam, Template> repeatParamListRef =
-        new InverseModelListRef<RepeatParam, Template>(RepeatParam.class, "templateRef", this);
+    @Attribute
+    private ModelRef<RepeatParam> repeatParamRef = 
+                    new ModelRef<RepeatParam>(RepeatParam.class);
     /**
      * Returns the key.
      *
@@ -92,7 +92,7 @@ public class Template implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Template other = (Template) obj;
+        Param other = (Param) obj;
         if (key == null) {
             if (other.key != null) {
                 return false;
@@ -103,14 +103,6 @@ public class Template implements Serializable {
         return true;
     }
 
-    public void setBytes(byte[] bytes) {
-        this.bytes = bytes;
-    }
-
-    public byte[] getBytes() {
-        return bytes;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -119,20 +111,28 @@ public class Template implements Serializable {
         return name;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
-    public String getDetail() {
-        return detail;
+    public Integer getType() {
+        return type;
     }
 
-    public InverseModelListRef<Param, Template> getParamListRef() {
-        return paramListRef;
+    public void setAttr(String atter) {
+        this.attr = atter;
     }
 
-    public InverseModelListRef<RepeatParam, Template> getRepeatParamListRef() {
-        return repeatParamListRef;
+    public String getAttr() {
+        return attr;
+    }
+
+    public ModelRef<Template> getTemplateRef() {
+        return templateRef;
+    }
+
+    public ModelRef<RepeatParam> getRepeatParamRef() {
+        return repeatParamRef;
     }
 
 }
