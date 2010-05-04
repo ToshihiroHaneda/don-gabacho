@@ -6,20 +6,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>帳票定義一覧</title>
+<title>report View</title>
 </head>
 <body>
 
 <pre>
-ここでは定義した帳票を一覧で表示します。
-テンプレートの数だけ一覧に表示されるはずです。
-
-現在定義は変更できないので、ご注意ください。
+ここでは入力した帳票を一覧で表示します。
+入力したデータはExcel出力できるようになります。
+現在変更できないので、ご注意ください。
 ※削除もできない
 
 </pre>
 
-<a href="${f:url('define')}">帳票を定義</a>
+<a href="${f:url('input?templateId=')}${templateId}">帳票を入力する</a>
 
 <!-- 一覧部の作成 -->
 <table border=1>
@@ -27,18 +26,19 @@
 <th>-</th>
 <th>名称</th>
 <th>詳細</th>
+<th>-</th>
 </tr>
 
-<c:forEach var="e" items="${templateList}">
+<c:forEach var="e" items="${reportList}">
 <tr>
-<td><a href="${f:url('view?templateId=')}${e.key.id}">帳票一覧</a></td>
+<td><!-- <a href="${f:url('edit?reportId=')}${e.key.id}">表示</a> --></td>
 <td>${e.name}</td>
 <td>${e.detail}</td>
+<td><a href="${f:url('export?reportId=')}${e.key.id}">出力</a></td>
 </tr>
 </c:forEach>
 
 </table>
-
 
 </body>
 </html>

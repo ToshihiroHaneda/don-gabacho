@@ -27,6 +27,8 @@ public class RepeatParam implements Serializable {
     @Attribute
     private String detail;
 
+    @Attribute
+    private Integer seq;
 
     @Attribute
     private ModelRef<Template> templateRef = 
@@ -128,5 +130,13 @@ public class RepeatParam implements Serializable {
 
     public InverseModelListRef<Param, RepeatParam> getParamListRef() {
         return paramListRef;
+    }
+
+    public void setSeq(Integer seq) {
+        this.seq = seq;
+    }
+
+    public Integer getSeq() {
+        return seq;
     }
 }

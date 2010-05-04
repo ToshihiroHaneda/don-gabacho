@@ -40,7 +40,7 @@ function addTableRows(tableName,listNum){
 	cell3.className = 'attr';
 
 
-	var HTML1 = '<input type="text" name="' +tableName+ 'Name' + counter + '" value="" size="10" />';
+	var HTML1 = '<input type="text" name="' +tableName+ 'Name' + counter + '" value=""/>';
 	var HTML2 = 
 	      '<select name="' + tableName + 'Type' + counter + '">' +
     		'<option value="1">文字列' +
@@ -50,7 +50,7 @@ function addTableRows(tableName,listNum){
     		'<option value="5">マスタ値' +
     		'<option value="6">画像' +
   			'</select>';
-	var HTML3 = '<input type="text" name="' +tableName+ 'Attr' + counter + '" value="" size="10" />';
+	var HTML3 = '<input type="text" name="' +tableName+ 'Attr' + counter + '" value="" />';
 	cell1.innerHTML = HTML1;
 	cell2.innerHTML = HTML2;
 	cell3.innerHTML = HTML3;
@@ -68,9 +68,10 @@ function addList() {
 	var listDetail = "repeatDetail" + listCnt;
 
 	var tableHTML =
+	'<hr>' +
 	'リスト' + listCnt + '<br>' +
-	'<input type="text" name="' + listName   + '">' +
-	'<input type="text" name="' + listDetail + '">' +
+	'名称:<input type="text" name="' + listName   + '"<br>' +
+	'詳細:<input type="text" name="' + listDetail + '"<br>' +
 	'<br>' + 
 	'<input type="button" onclick="addTableRows(\'' + tableId + '\',' + listCnt + ')" value="リスト内定義追加">' + 
 	'<table cellspacing="0" id="' + tableId + '">' + 
@@ -87,14 +88,23 @@ function addList() {
 </head>
 <body>
 
+
+<pre>
+帳票を定義します。チェック等はまだやってません。
+タイプ属性などでIFを向上する予定ですが、現在はなにもできません。
+現在、テンプレートの定義するシート名は[template]固定です。
+</pre>
+
 <form action="${f:url('defineExec')}" method="post" enctype="multipart/form-data" >
 <!-- 名称 -->
-<input type="text" name="name">
+名称:<input type="text" name="name"><br>
 <!-- 詳細 -->
-<input type="text" name="detail">
+詳細:<input type="text" name="detail"><br>
 <!-- 定義ファイル -->
-<input type="file" name="templateFile">
+テンプレートファイル<input type="file" name="templateFile"><br>
 <br>
+
+<hr>
 <!-- 定義 -->
 <input type="button" onclick="addTableRows('param')" value="定義追加">
 <table cellspacing="0" id="param">
@@ -108,11 +118,11 @@ function addList() {
 
 
 <!-- リスト表示 -->
-
 <div id="listDiv">
 </div>
 
 <br>
+<hr>
 <input type="button" onclick="addList()" value="リスト追加">
 
 

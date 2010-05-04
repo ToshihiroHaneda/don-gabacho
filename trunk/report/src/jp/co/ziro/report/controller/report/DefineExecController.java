@@ -22,7 +22,7 @@ public class DefineExecController extends Controller {
         createParam(template);
         createRepeatParam(template);
         
-        return forward("index.jsp");
+        return redirect("/report/");
     }
 
     /**
@@ -62,6 +62,7 @@ public class DefineExecController extends Controller {
             param.setName(name);
             param.setType(Integer.valueOf(type));
             param.setAttr(attr);
+            param.setSeq(cnt);
 
             param.getTemplateRef().setModel(template);
             Datastore.put(param, template);
@@ -85,6 +86,7 @@ public class DefineExecController extends Controller {
             RepeatParam repeatParam = new RepeatParam();
             repeatParam.setName(name);
             repeatParam.setDetail(detail);
+            repeatParam.setSeq(cnt);
             repeatParam.getTemplateRef().setModel(template);
            	Datastore.put(repeatParam, template);
 
@@ -94,15 +96,16 @@ public class DefineExecController extends Controller {
                 if ( StringUtil.isEmpty(paramName) ) {
                     break;
                 }
-                
+
                 String paramType = requestScope("repeatParam" + cnt + "Type" + paramCnt);
                 String paramAttr = requestScope("repeatParam" + cnt + "Attr" + paramCnt);
 
             	Param param = new Param();
-            	
+
             	param.setName(paramName);
             	param.setType(Integer.valueOf(paramType));
             	param.setAttr(paramAttr);
+                param.setSeq(paramCnt);
 
             	param.getRepeatParamRef().setModel(repeatParam);
                 Datastore.put(param, repeatParam);

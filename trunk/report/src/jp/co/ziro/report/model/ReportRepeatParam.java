@@ -7,9 +7,10 @@ import com.google.appengine.api.datastore.Key;
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.InverseModelListRef;
 import org.slim3.datastore.Model;
+import org.slim3.datastore.ModelRef;
 
 @Model(schemaVersion = 1)
-public class Template implements Serializable {
+public class ReportRepeatParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,27 +19,18 @@ public class Template implements Serializable {
 
     @Attribute(version = true)
     private Long version;
-    
+
     @Attribute
-    private String name;
- 
+    private ModelRef<Report> reportRef = 
+                    new ModelRef<Report>(Report.class);
     @Attribute
-    private String detail;
-
-    @Attribute(lob = true)
-    private byte[] bytes;
-
-    @Attribute(persistent = false)
-    private InverseModelListRef<Param, Template> paramListRef = 
-        new InverseModelListRef<Param, Template>(Param.class, "templateRef", this);
-
-    @Attribute(persistent = false)
-    private InverseModelListRef<RepeatParam, Template> repeatParamListRef =
-        new InverseModelListRef<RepeatParam, Template>(RepeatParam.class, "templateRef", this);
+    private ModelRef<RepeatParam> repeatParamRef = 
+                    new ModelRef<RepeatParam>(RepeatParam.class);
     
     @Attribute(persistent = false)
-    private InverseModelListRef<Report, Template> reportListRef = 
-        new InverseModelListRef<Report, Template>(Report.class, "templateRef", this);
+    private InverseModelListRef<ReportParam, ReportRepeatParam> reportParamListRef = 
+        new InverseModelListRef<ReportParam, ReportRepeatParam>(ReportParam.class, "reportRepeatParamRef", this);
+
     /**
      * Returns the key.
      *
@@ -96,7 +88,7 @@ public class Template implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Template other = (Template) obj;
+        ReportRepeatParam other = (ReportRepeatParam) obj;
         if (key == null) {
             if (other.key != null) {
                 return false;
@@ -107,40 +99,16 @@ public class Template implements Serializable {
         return true;
     }
 
-    public void setBytes(byte[] bytes) {
-        this.bytes = bytes;
+    public ModelRef<Report> getReportRef() {
+        return reportRef;
     }
 
-    public byte[] getBytes() {
-        return bytes;
+    public InverseModelListRef<ReportParam, ReportRepeatParam> getReportParamListRef() {
+        return reportParamListRef;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public InverseModelListRef<Param, Template> getParamListRef() {
-        return paramListRef;
-    }
-
-    public InverseModelListRef<RepeatParam, Template> getRepeatParamListRef() {
-        return repeatParamListRef;
-    }
-
-    public InverseModelListRef<Report, Template> getReportListRef() {
-        return reportListRef;
+    public ModelRef<RepeatParam> getRepeatParamRef() {
+        return repeatParamRef;
     }
 
 }
