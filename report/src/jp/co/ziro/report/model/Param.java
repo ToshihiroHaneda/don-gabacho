@@ -29,6 +29,9 @@ public class Param implements Serializable {
     private String attr;
 
     @Attribute
+    private Integer seq;
+    
+    @Attribute
     private ModelRef<Template> templateRef = 
                     new ModelRef<Template>(Template.class);
 
@@ -133,6 +136,14 @@ public class Param implements Serializable {
 
     public ModelRef<RepeatParam> getRepeatParamRef() {
         return repeatParamRef;
+    }
+
+    public void setSeq(Integer seq) {
+        this.seq = seq;
+    }
+
+    public Integer getSeq() {
+        return seq;
     }
 
 }
