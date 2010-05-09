@@ -26,26 +26,28 @@ import org.bbreak.excella.reports.tag.SingleParamParser;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 
+/**
+ * 出力コントローラー
+ * @author z001
+ */
 public class ExportController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
        
         String reportId = requestScope("reportId");
-        //帳票を取得
+        //帳票データを取得
         Report report = ReportService.findById(Integer.valueOf(reportId));
+        //テンプレートを取得
         Template template = report.getTemplateRef().getModel();
-
+        //テンプレートのストリームを取得
         ByteArrayInputStream inStream = new ByteArrayInputStream(template.getBytes());
 
+        //エクセルのフォーマット指定
         ReportBook outputBook = new ReportBook(inStream,ExcelExporter.FORMAT_TYPE);
         //帳票の名称に変更
         ReportSheet outputSheet = new ReportSheet("template",report.getName());
 
-        //-----------------------------------------------------------
-        /**
-         * エンジン部分
-         */
         List<ReportParam> paramList = report.getReportParamListRef().getModelList();
         addParam(paramList,outputSheet);
 
@@ -54,16 +56,17 @@ public class ExportController extends Controller {
             addRepeatParam(repeatParam,outputSheet);
         }
 
-        //-----------------------------------------------------------
+        //シートとして追加
         outputBook.addReportSheet(outputSheet);
-        //-----------------------------------------------------------
 
         ReportProcessor reportProcessor = new ReportProcessor();
+        //帳票を作成
         reportProcessor.process(outputBook);
 
         response.setHeader("Content-Disposition","attachment; filename=excel.xls");
         response.setContentType("application/msexcel");
- 
+
+        //レスポンスに書き込む
         OutputStream out = new BufferedOutputStream(response.getOutputStream());
         out.write(outputBook.getBytes());
         out.close();
@@ -71,6 +74,11 @@ public class ExportController extends Controller {
         return null;
     }
 
+    /**
+     * パラメータの追加
+     * @param repeatParam
+     * @param outputSheet
+     */
     private void addRepeatParam(ReportRepeatParam repeatParam,ReportSheet outputSheet) {
        
         Map<Integer,List<ReportParam>> reportMap = new HashMap<Integer,List<ReportParam>>();
@@ -137,12 +145,14 @@ public class ExportController extends Controller {
 
     /**
      * パラムデータの追加
-     * @param paramList
-     * @param outputSheet
+     * @param paramList パラメータデータリスト
+     * @param outputSheet 出力対象シート
      */
     private void addParam(List<ReportParam> paramList, ReportSheet outputSheet) {
+        //パラメータ数回繰り返す
         for (ReportParam reportParam : paramList ) {
             Param param = reportParam.getParamRef().getModel();
+            //パラメータ名で値を埋め込む
             outputSheet.addParam( SingleParamParser.DEFAULT_TAG,param.getName(),reportParam.getValue());
         }
     }
