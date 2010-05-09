@@ -11,18 +11,41 @@ import org.slim3.datastore.Datastore;
 
 import com.google.appengine.repackaged.com.google.common.base.StringUtil;
 
+/**
+ * 定義の処理
+ * @author z001
+ */
 public class DefineExecController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
-        
-        //TODO トランザクション
-       
+
+        if (!validate()) {
+            return forward("define.jsp");
+        }
+
+        //テンプレートを作成
         Template template = createTemplate();
+        //パラメータを作成
         createParam(template);
+        //繰り返し部分のパラメータを作成
         createRepeatParam(template);
-        
+ 
         return redirect("/report/");
+    }
+ 
+    /**
+     * 入力チェック
+     * @return 
+     */
+    protected boolean validate() {
+        String name = requestScope("name"); 
+        FileItem formFile = requestScope("templateFile"); 
+        if ( StringUtil.isEmpty(name) ||
+             formFile == null ) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -39,7 +62,7 @@ public class DefineExecController extends Controller {
 
         FileItem formFile = requestScope("templateFile"); 
         template.setBytes(formFile.getData());
- 
+
         return template;
     }
 
@@ -91,6 +114,7 @@ public class DefineExecController extends Controller {
            	Datastore.put(repeatParam, template);
 
             int paramCnt = 1;
+
             while ( true ) {
                 String paramName = requestScope("repeatParam" + cnt + "Name" + paramCnt);
                 if ( StringUtil.isEmpty(paramName) ) {

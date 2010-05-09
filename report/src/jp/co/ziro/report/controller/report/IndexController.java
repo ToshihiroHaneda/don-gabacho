@@ -8,6 +8,10 @@ import jp.co.ziro.report.service.TemplateService;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 
+/**
+ * 帳票定義一覧
+ * @author z001
+ */
 public class IndexController extends Controller {
 
     @Override

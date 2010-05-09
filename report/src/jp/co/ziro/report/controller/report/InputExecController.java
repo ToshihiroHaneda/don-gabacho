@@ -16,6 +16,10 @@ import org.slim3.datastore.Datastore;
 
 import com.google.appengine.repackaged.com.google.common.base.StringUtil;
 
+/**
+ * データ入力
+ * @author z001
+ */
 public class InputExecController extends Controller {
 
     @Override
@@ -43,6 +47,11 @@ public class InputExecController extends Controller {
         return redirect("/report/view?templateId=" + idBuf);
     }
 
+    /**
+     * 
+     * @param template
+     * @param report
+     */
     private void createRepeatParam(Template template, Report report) {
        
         if ( template.getRepeatParamListRef() == null ) {
@@ -85,6 +94,11 @@ public class InputExecController extends Controller {
         }
     }
 
+    /**
+     * 
+     * @param template
+     * @param report
+     */
     private void createParam(Template template, Report report) {
         if ( template.getParamListRef() == null ) {
             return;

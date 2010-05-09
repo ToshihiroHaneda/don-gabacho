@@ -15,6 +15,10 @@ import org.slim3.controller.Navigation;
 import org.slim3.datastore.InverseModelListRef;
 import org.slim3.util.BeanUtil;
 
+/**
+ * 帳票入力遷移
+ * @author z001
+ */
 public class InputController extends Controller {
 
     @Override
