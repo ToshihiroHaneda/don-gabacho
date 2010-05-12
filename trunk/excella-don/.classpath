@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="lib/poi-3.6-20091214.jar"/>
 	<classpathentry kind="lib" path="lib/poi-ooxml-3.6-20091214.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/jodconverter-core-3.0-beta-3.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
