@@ -2,7 +2,7 @@
 
 <project name="ExCella-DonGabacho" default="jar" basedir=".">
 
-    <property name="versionName" value="0.0.0"/>
+    <property name="versionName" value="0.0.1"/>
     <property name="jarFile" value="excella-don-${versionName}.jar"/>
 
     <property name="classDir" value="../classes"/>
