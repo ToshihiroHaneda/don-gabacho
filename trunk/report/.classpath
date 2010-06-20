@@ -26,15 +26,10 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/geronimo-jpa_3.0_spec-1.1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/geronimo-jta_1.1_spec-1.1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jdo2-api-2.3-eb.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/json-20080701.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsr107cache-1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsr173_1.0_api.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/juh-3.0.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/jurt-3.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.14.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/ridl-3.0.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/unoil-3.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/xmlbeans-2.3.0.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/excella-don-0.0.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/excella-don-0.0.1.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
